@@ -1,0 +1,23 @@
+#cloud-config
+packages:
+  - git
+  - vim
+  - tmux 
+  - zsh
+  - opentofu
+
+users:
+  - name: antonmueller 
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/zsh
+    ssh_authorized_keys: ssh_ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIInbO2550K/sAevpkr/cBZ6tyJTwEVUKaj/jXYOX5MJj dbsmbp_hetznercloud_20241122
+    plain_text_passwd: Weso%cht#1990
+    
+runcmd:
+  - sudo -u antonmueller sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  - git clone https://github.com/VundleVim/Vundle.vim.git /home/antonmueller/.vim/bundle/Vundle.vim
+  - sudo -u antonmueller vim +PluginInstall +qall
+  - git clone https://github.com/tmux-plugins/tpm /home/antonmueller/.tmux/plugins/tpm
+  - chown -R antonmueller:antonmueller /home/antonmueller
+
+# vim:ft=yaml
